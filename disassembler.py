@@ -51,13 +51,15 @@ def disassemble(bindata,Wordpointer):
 		if int(dB,2) == 0x1f:
 			dB = int(bindata[Wordpointer+1],16)
 			Wordpointer += 1
+		else:
+			dB = Values.get(int(dB,2))
 		dO = dBinary[13:18]
 		#print ("a: %s" % dA)
 		#print ("b: %s" % dB)
 		#print ("o: %s" % dO)
 		#print dBinary[2:]
 		dO = Opcode.get(int(dO,2))
-		dB = Values.get(int(dB,2))
+		
 		print ("%s: %s %s, %s" % ("0x{0:00004x}".format(Wp)[2:], dO, dB, dA))
 		Wordpointer += 1
 		Wp = Wordpointer
@@ -93,7 +95,12 @@ def parseHex(bdata,count):
 
 count=0
 count2=0
-f = open("chess1.bin","rb")
+if (len(sys.argv) > 1):
+    	Filename = sys.argv[1]
+else:
+	print ("Argument needed! (Filename)")
+	exit()
+f = open(Filename,"rb")
 a = f.read()
 data=[]
 bindata=[]
