@@ -107,13 +107,21 @@ bindata=[]
 #Binarys kriegen
 for i,b in enumerate(a):
 	#print ("%s | %s" % (i, b))
-	data.append(hex(ord(a[i])))
+	formateddata = "0x{0:002x}".format(int(hex(ord(a[i])),16))[2:]
+	#print formateddata
+	data.append(formateddata)
 
 #Binarys 
 while count < i:
-	bindata.append(hex((int(data[count],16)<<8)+int(data[count+1],16))[2:])
+	firstByte = hex(int(data[count],16)<<8)[2:]
+	#print firstByte
+	secondByte = hex(int(data[count+1],16))[2:]
+	#print secondByte
+	word = hex(int(firstByte,16) + int(secondByte,16))[2:]
+	#print word
+	bindata.append(word)
 	parseHex(bindata,count2)
-	print bindata[count2].upper()
+	print "%s" % "0x{0:00004x}".format(int(bindata[count2],16))[2:].upper()
 	count+=2
 	count2+=1
 
